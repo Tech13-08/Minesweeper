@@ -1,0 +1,61 @@
+html,
+body {
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #f4f4f9;
+}
+
+#game-container {
+  text-align: center;
+}
+
+canvas {
+  display: block;
+  margin: 20px auto;
+}
+
+#game-hub {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 10px;
+}
+
+#mine-info {
+  font-size: 18px;
+}
+
+#game-feedback {
+  font-size: 18px;
+  color: #333;
+}
+
+#restart-button {
+  padding: 10px 20px;
+  font-size: 18px;
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+#restart-button:hover {
+  background-color: #45a049;
+}
+
+h1 {
+  font-family: Arial, sans-serif;
+  font-size: 36px;
+  color: #333;
+  margin: 20px 0;
+}
+
+#canvas-container {
+  display: flex;
+  justify-content: center;
+}
