@@ -172,9 +172,9 @@ class Game {
   }
 
   updateDialogueUI() {
-    document.getElementById("character-image").src = getAssetPath(
-      `${this.currentImage}.png`
-    );
+    document.getElementById(
+      "character-image"
+    ).src = `Assets/Images/${this.currentImage}.png`;
     document.getElementById("dialogue-text").innerText = this.currentDialogue;
   }
 

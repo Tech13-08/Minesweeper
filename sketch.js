@@ -9,31 +9,24 @@ let bocchiTile;
 let unrevealedTile;
 let flagTile;
 let mineTile;
-let bocchiIdle, bocchiNervous, bocchiLost, bocchiWin;
-
-// Helper function to get the correct path for assets
-function getAssetPath(filename) {
-  // Check if we're running on GitHub Pages
-  const isGitHubPages = window.location.hostname.includes("github.io");
-  // If on GitHub Pages, include the repository name in the path
-  // Replace 'your-repo-name' with your actual repository name
-  const repoPath = isGitHubPages ? "/your-repo-name" : "";
-  return `${repoPath}/assets/images/${filename}`;
-}
+let bocchiIdle;
+let bocchiNervous;
+let bocchiLost;
+let bocchiWin;
 
 function preload() {
-  imgTile = loadImage(getAssetPath("kessoku.png"));
-  nijikaTile = loadImage(getAssetPath("nijikaTile.png"));
-  kitaTile = loadImage(getAssetPath("kitaTile.png"));
-  ryoTile = loadImage(getAssetPath("ryoTile.png"));
-  bocchiTile = loadImage(getAssetPath("bocchiTile.png"));
-  unrevealedTile = loadImage(getAssetPath("unrevealedTile.png"));
-  flagTile = loadImage(getAssetPath("flagTile.png"));
-  mineTile = loadImage(getAssetPath("mineTile.png"));
-  bocchiIdle = loadImage(getAssetPath("bocchiIdle.png"));
-  bocchiNervous = loadImage(getAssetPath("bocchiNervous.png"));
-  bocchiLost = loadImage(getAssetPath("bocchiLost.png"));
-  bocchiWin = loadImage(getAssetPath("bocchiWin.png"));
+  imgTile = loadImage("Assets/Images/kessoku.png");
+  nijikaTile = loadImage("Assets/Images/nijikaTile.png");
+  kitaTile = loadImage("Assets/Images/kitaTile.png");
+  ryoTile = loadImage("Assets/Images/ryoTile.png");
+  bocchiTile = loadImage("Assets/Images/bocchiTile.png");
+  unrevealedTile = loadImage("Assets/Images/unrevealedTile.png");
+  flagTile = loadImage("Assets/Images/flagTile.png");
+  mineTile = loadImage("Assets/Images/mineTile.png");
+  bocchiIdle = loadImage("Assets/Images/bocchiIdle.png");
+  bocchiNervous = loadImage("Assets/Images/bocchiNervous.png");
+  bocchiLost = loadImage("Assets/Images/bocchiLost.png");
+  bocchiWin = loadImage("Assets/Images/bocchiWin.png");
 }
 function setup() {
   let canvas = createCanvas(400, 400);
