@@ -19,6 +19,10 @@ function preload() {
   unrevealedTile = loadImage("assets/images/unrevealedTile.png");
   flagTile = loadImage("assets/images/flagTile.png");
   mineTile = loadImage("assets/images/mineTile.png");
+  bocchiIdle = loadImage("assets/images/bocchiIdle.png");
+  bocchiNervous = loadImage("assets/images/bocchiNervous.png");
+  bocchiLost = loadImage("assets/images/bocchiLost.png");
+  bocchiWin = loadImage("assets/images/bocchiWin.png");
 }
 function setup() {
   let canvas = createCanvas(400, 400);
