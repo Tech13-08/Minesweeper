@@ -9,20 +9,31 @@ let bocchiTile;
 let unrevealedTile;
 let flagTile;
 let mineTile;
+let bocchiIdle, bocchiNervous, bocchiLost, bocchiWin;
+
+// Helper function to get the correct path for assets
+function getAssetPath(filename) {
+  // Check if we're running on GitHub Pages
+  const isGitHubPages = window.location.hostname.includes("github.io");
+  // If on GitHub Pages, include the repository name in the path
+  // Replace 'your-repo-name' with your actual repository name
+  const repoPath = isGitHubPages ? "/your-repo-name" : "";
+  return `${repoPath}/assets/images/${filename}`;
+}
 
 function preload() {
-  imgTile = loadImage("assets/images/kessoku.png");
-  nijikaTile = loadImage("assets/images/nijikaTile.png");
-  kitaTile = loadImage("assets/images/kitaTile.png");
-  ryoTile = loadImage("assets/images/ryoTile.png");
-  bocchiTile = loadImage("assets/images/bocchiTile.png");
-  unrevealedTile = loadImage("assets/images/unrevealedTile.png");
-  flagTile = loadImage("assets/images/flagTile.png");
-  mineTile = loadImage("assets/images/mineTile.png");
-  bocchiIdle = loadImage("assets/images/bocchiIdle.png");
-  bocchiNervous = loadImage("assets/images/bocchiNervous.png");
-  bocchiLost = loadImage("assets/images/bocchiLost.png");
-  bocchiWin = loadImage("assets/images/bocchiWin.png");
+  imgTile = loadImage(getAssetPath("kessoku.png"));
+  nijikaTile = loadImage(getAssetPath("nijikaTile.png"));
+  kitaTile = loadImage(getAssetPath("kitaTile.png"));
+  ryoTile = loadImage(getAssetPath("ryoTile.png"));
+  bocchiTile = loadImage(getAssetPath("bocchiTile.png"));
+  unrevealedTile = loadImage(getAssetPath("unrevealedTile.png"));
+  flagTile = loadImage(getAssetPath("flagTile.png"));
+  mineTile = loadImage(getAssetPath("mineTile.png"));
+  bocchiIdle = loadImage(getAssetPath("bocchiIdle.png"));
+  bocchiNervous = loadImage(getAssetPath("bocchiNervous.png"));
+  bocchiLost = loadImage(getAssetPath("bocchiLost.png"));
+  bocchiWin = loadImage(getAssetPath("bocchiWin.png"));
 }
 function setup() {
   let canvas = createCanvas(400, 400);
