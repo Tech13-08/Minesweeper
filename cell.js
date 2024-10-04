@@ -9,6 +9,7 @@ class Cell {
     this.flagged = false;
     this.revealed = false;
     this.neighborCount = 0;
+    this.image = unrevealedTile;
   }
 
   contains(x, y) {
@@ -18,6 +19,8 @@ class Cell {
   }
 
   toggleFlag() {
-    this.flagged = !this.flagged;
+    if (!this.revealed) {
+      this.flagged = !this.flagged;
+    }
   }
 }

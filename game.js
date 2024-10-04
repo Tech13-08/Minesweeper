@@ -14,6 +14,35 @@ class Game {
     this.won = false;
     this.revealedCells = 0;
     this.flagsPlaced = 0;
+    this.charTileImages = [nijikaTile, ryoTile, kitaTile, bocchiTile];
+    this.dialogueState = "idle";
+    this.currentDialogue = "";
+    this.currentImage = "bocchiIdle";
+    this.imageTime = 0;
+    this.idleDialogue = [
+      "I wonder if I can clear this minefield...",
+      "Let's do our best!",
+      "Minesweeper is all about strategy, right?",
+      "I hope I don't mess this up...",
+    ];
+    this.nervousDialogue = [
+      "Eep! That was close!",
+      "My heart's racing...",
+      "I'm not sure about this one...",
+      "Deep breaths, deep breaths...",
+    ];
+    this.defeatedDialogue = [
+      "Oh no! I hit a mine!",
+      "I guess I'm not cut out for this...",
+      "That didn't go well at all...",
+      "Maybe next time...",
+    ];
+    this.victoryDialogue = [
+      "We did it! We cleared the minefield!",
+      "I can't believe I actually won!",
+      "That was nerve-wracking, but fun!",
+      "Victory feels amazing!",
+    ];
   }
 
   make2DArray(cols, rows) {
@@ -25,6 +54,7 @@ class Game {
   }
 
   setMines(mouseI, mouseJ) {
+    this.removeFlags();
     let options = [];
     for (let i = 0; i < this.cols; i++) {
       for (let j = 0; j < this.rows; j++) {
@@ -86,23 +116,66 @@ class Game {
           let cell = this.grid[i][j];
           if (
             mouseBtn != RIGHT &&
+            mouseBtn != CENTER &&
             cell.contains(mouseCoord[0], mouseCoord[1])
           ) {
-            if (mouseBtn == CENTER) {
+            if (flagMode) {
               cell.toggleFlag();
               if (cell.flagged) this.flagsPlaced++;
               else this.flagsPlaced--;
+              this.updateDialogue("nervous");
               continue;
             }
             if (!this.minesSet) this.setMines(i, j);
             this.reveal(i, j);
-            if (cell.mine) this.gameOver();
-            if (this.revealedCells == this.cols * this.rows - this.totalMines)
+            if (cell.mine) {
+              this.gameOver();
+              this.updateDialogue("defeated");
+            } else {
+              this.updateDialogue("nervous");
+            }
+            if (this.revealedCells == this.cols * this.rows - this.totalMines) {
               this.gameWon();
+              this.updateDialogue("victory");
+            }
           }
         }
       }
     }
+  }
+
+  updateDialogue(state) {
+    this.imageTime = 0;
+    this.dialogueState = state;
+    let dialogueArray;
+    switch (state) {
+      case "idle":
+        dialogueArray = this.idleDialogue;
+        this.currentImage = "bocchiIdle";
+        break;
+      case "nervous":
+        dialogueArray = this.nervousDialogue;
+        this.currentImage = "bocchiNervous";
+        break;
+      case "defeated":
+        dialogueArray = this.defeatedDialogue;
+        this.currentImage = "bocchiLost";
+        break;
+      case "victory":
+        dialogueArray = this.victoryDialogue;
+        this.currentImage = "bocchiWin";
+        break;
+    }
+    this.currentDialogue =
+      dialogueArray[Math.floor(Math.random() * dialogueArray.length)];
+    this.updateDialogueUI();
+  }
+
+  updateDialogueUI() {
+    document.getElementById(
+      "character-image"
+    ).src = `assets/images/${this.currentImage}.png`;
+    document.getElementById("dialogue-text").innerText = this.currentDialogue;
   }
 
   render() {
@@ -117,30 +190,30 @@ class Game {
   show(i, j) {
     let cell = this.grid[i][j];
     stroke(0);
-    noFill();
-    rect(cell.x, cell.y, cell.w, cell.w); // Draw the cell
+    image(unrevealedTile, cell.x, cell.y, cell.w, cell.w);
 
     if (cell.flagged) {
-      fill(127); // Color for flagged cells
-      rect(cell.x, cell.y, cell.w, cell.w);
+      image(flagTile, cell.x, cell.y, cell.w, cell.w);
     } else if (cell.revealed) {
       if (cell.mine) {
-        fill(255, 0, 0); // Red color for mines
-        ellipse(cell.x + cell.w * 0.5, cell.y + cell.w * 0.5, cell.w * 0.5); // Draw a circle for mines
+        image(mineTile, cell.x, cell.y, cell.w, cell.w);
       } else {
-        fill(200); // Revealed cell background
-        rect(cell.x, cell.y, cell.w, cell.w);
+        cell.image =
+          cell.image == unrevealedTile
+            ? this.charTileImages[
+                Math.floor(Math.random() * this.charTileImages.length)
+              ]
+            : cell.image;
 
-        if (cell.neighborCount > 0) {
-          textAlign(CENTER, CENTER);
-          fill(0); // Black text for the numbers
-          textSize(cell.w * 0.5); // Set text size proportional to the cell size (50% of cell size)
-          text(
-            cell.neighborCount,
-            cell.x + cell.w * 0.5, // Center horizontally
-            cell.y + cell.w * 0.5 // Center vertically
-          );
-        }
+        image(cell.image, cell.x, cell.y, cell.w, cell.w);
+        textAlign(CENTER, CENTER);
+        fill(0);
+        textSize(cell.w * 0.5);
+        text(
+          cell.neighborCount > 0 ? cell.neighborCount : "",
+          cell.x + cell.w * 0.5,
+          cell.y + cell.w * 0.5
+        );
       }
     }
   }
@@ -170,18 +243,23 @@ class Game {
   gameOver() {
     this.running = false;
     document.getElementById("game-feedback").innerText = "Game Over!";
-    this.revealAll();
+    for (let i = 0; i < this.cols; i++) {
+      for (let j = 0; j < this.rows; j++) {
+        this.grid[i][j].revealed = true;
+        this.grid[i][j].flagged = false;
+      }
+    }
   }
 
   gameWon() {
     this.running = false;
     document.getElementById("game-feedback").innerText = "You Win!";
+    this.removeFlags();
   }
 
-  revealAll() {
+  removeFlags() {
     for (let i = 0; i < this.cols; i++) {
       for (let j = 0; j < this.rows; j++) {
-        this.grid[i][j].revealed = true;
         this.grid[i][j].flagged = false;
       }
     }

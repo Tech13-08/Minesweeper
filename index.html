@@ -20,6 +20,12 @@
         <button id="restart-button">Restart</button>
       </div>
       <div id="controls">
+        <p>
+          Flag Mode:
+          <button id="flag-button">
+            <img src="Assets/Images/flagTile.png" alt="Flag" id="flag-icon" />
+          </button>
+        </p>
         <label for="difficulty">Select Difficulty:</label>
         <select id="difficulty">
           <option value="40">Easy</option>
@@ -28,6 +34,14 @@
         </select>
       </div>
       <div id="canvas-container"></div>
+      <div id="dialogue-container">
+        <img
+          id="character-image"
+          src="assets/images/bocchiIdle.png"
+          alt="Character"
+        />
+        <div id="dialogue-text"></div>
+      </div>
     </div>
     <script src="sketch.js"></script>
     <script src="cell.js"></script>

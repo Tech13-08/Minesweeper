@@ -6,7 +6,8 @@ body {
   justify-content: center;
   align-items: center;
   height: 100vh;
-  background-color: #f4f4f9;
+  background-color: #232325;
+  color: #ffffff;
 }
 
 #game-container {
@@ -27,18 +28,37 @@ canvas {
 
 #mine-info {
   font-size: 18px;
+  text-align: left;
+}
+
+#flag-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  transition: filter 0.3s ease;
+}
+
+#flag-icon {
+  width: 24px;
+  height: 24px;
+  vertical-align: middle;
 }
 
 #game-feedback {
   font-size: 18px;
-  color: #333;
+}
+
+#controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 #restart-button {
   padding: 10px 20px;
   font-size: 18px;
   background-color: #4caf50;
-  color: white;
+  color: #ffffff;
   border: none;
   cursor: pointer;
   transition: background-color 0.3s;
@@ -51,11 +71,37 @@ canvas {
 h1 {
   font-family: Arial, sans-serif;
   font-size: 36px;
-  color: #333;
   margin: 20px 0;
 }
 
 #canvas-container {
   display: flex;
   justify-content: center;
+}
+
+#dialogue-container {
+  display: flex;
+  align-items: center;
+  background-color: #333;
+  border-radius: 10px;
+  padding: 10px;
+  margin-bottom: 20px;
+  max-width: 400px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+#character-image {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 20%;
+  margin-right: 20px;
+}
+
+#dialogue-text {
+  flex-grow: 1;
+  font-size: 16px;
+  line-height: 1.4;
+  text-align: left;
 }
