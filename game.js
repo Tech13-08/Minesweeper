@@ -126,6 +126,9 @@ class Game {
               this.updateDialogue("nervous");
               continue;
             }
+            if (cell.flagged) {
+              continue;
+            }
             if (!this.minesSet) this.setMines(i, j);
             this.reveal(i, j);
             if (cell.mine) {
